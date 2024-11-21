@@ -5,6 +5,7 @@ ClapTrap::ClapTrap() : name()
 	hit_pts = 10;
 	energy_pts = 10;
 	attack_dmg = 0;
+	max = hit_pts;
 	std::cout << "ClapTrap default constructor called" << std::endl;
 }
 
@@ -14,12 +15,13 @@ ClapTrap::ClapTrap(std::string _name)
 	hit_pts = 10;
 	energy_pts = 10;
 	attack_dmg = 0;
+	max = hit_pts;
 	std::cout << "ClapTrap constructor called" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "ClapTrap destructor call" << std::endl;
+	std::cout << "ClapTrap destructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &src)
@@ -35,6 +37,7 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &src)
 	this->attack_dmg = src.attack_dmg;
 	this->energy_pts = src.energy_pts;
 	this->hit_pts = src.hit_pts;
+	this->max = src.max;
 	this->name = src.name;
 	return (*this);
 }
@@ -43,7 +46,7 @@ void ClapTrap::status(void)
 {
 	std::cout << std::endl;
 	std::cout << "*******************" << std::endl;
-	std::cout << "name : " << name << std::endl;
+	std::cout << "ClapTrap name : " << name << std::endl;
 	std::cout << "hit points : " << hit_pts << std::endl;
 	std::cout << "energy points : " << energy_pts << std::endl;
 	std::cout << "*******************" << std::endl;
@@ -65,30 +68,30 @@ void ClapTrap::takeDamage(unsigned int amount)
 {
 	if (hit_pts > 0)
 	{
-		std::cout << "ClapTrap " << name << " takes " << amount << " damage." << std::endl;
+		std::cout << name << " takes " << amount << " damage." << std::endl;
 		if (hit_pts - amount >= 0)
 			hit_pts -= amount;
 		else
 		{
 			hit_pts = 0;
-			std::cout << "ClapTrap died" << std::endl;
+			std::cout << name << " died" << std::endl;
 		}
 	}
 	else
-		std::cout << "ClapTrap is already dead, don't be so violent" << std::endl;
+		std::cout << name << " is already dead, don't be so violent" << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-	if (hit_pts > 0 && hit_pts < 10)
+	if (hit_pts > 0 && hit_pts < max)
 	{
-		if (hit_pts + amount <= 10)
+		if (hit_pts + amount <= max)
 			hit_pts += amount;
 		else
-			hit_pts = 10;
+			hit_pts = max;
 	}
-	else if (hit_pts == 10)
-		std::cout << "ClapTrap is already full health" << std::endl;
+	else if (hit_pts == max)
+		std::cout << name << " is already full health" << std::endl;
 	else
-		std::cout << "ClapTrap can't repair itself because he is already dead" << std::endl;
+		std::cout << name << " can't repair itself because he is already dead" << std::endl;
 }
